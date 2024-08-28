@@ -1,5 +1,5 @@
-from utils import get_all_cities, get_coordinates, get_attractions
-from llm import chat
+from .utils import get_all_cities, get_coordinates, get_attractions
+from .llm import chat
 
 from flask import Flask, request
 app = Flask(__name__)

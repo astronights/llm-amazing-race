@@ -4,7 +4,7 @@ from dotenv import load_dotenv, find_dotenv
 from ast import literal_eval
 import google.generativeai as genai
 
-from prompt import puzzle
+from .prompt import puzzle
 
 load_dotenv(find_dotenv())
 

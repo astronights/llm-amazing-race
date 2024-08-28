@@ -2,7 +2,7 @@ import requests
 import numpy as np 
 import pandas as pd 
 
-from overpass import attractions, query, url
+from .overpass import attractions, query, url
 
 fpath = './public/worldcities.csv'
 df_city = pd.read_csv(fpath)
