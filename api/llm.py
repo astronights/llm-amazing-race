@@ -8,11 +8,11 @@ from .prompt import puzzle
 
 load_dotenv(find_dotenv())
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-model = genai.GenerativeModel('gemini-1.5-flash')
-
 
 def chat(city, sights, n=10):
+    genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    
     response = model.generate_content(puzzle.format(city=city, n=n, sights=sights))
     try:
         journey = literal_eval(response.text) 
