@@ -42,4 +42,4 @@ def get_attractions(lat: float, lng: float, n: int = 10, radius: float = 5000):
         val = [detail(point) for point in data]
         out.extend(val)
 
-    return random.choices(out, k=n)
+    return out if len(out) < n else random.choices(out, k=n)
