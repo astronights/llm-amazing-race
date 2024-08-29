@@ -1,10 +1,15 @@
 import {
     Flex, Button, Drawer, DrawerBody, DrawerOverlay, DrawerContent, useColorModeValue,
     Stack, useColorMode, IconButton, useMediaQuery, useDisclosure, HStack, VStack, Link, Box, Text,
-    Container
+    Container,
+    Heading,
+    Input,
+    Tr, Th, Table, Thead, Tbody, Td,
+    Divider
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import { useState } from "react";
 const TbIcons = require("react-icons/tb");
 
 interface Props {
@@ -27,6 +32,9 @@ const Multiplayer = (props: Props) => {
         "yellow": "#D69E2E"
     };
 
+    const [gameCode, setGameCode] = useState('');
+    const [members, setMembers] = useState([]);
+
     const { colorMode, toggleColorMode } = useColorMode();
 
     const linkedin = () => {
@@ -48,7 +56,7 @@ const Multiplayer = (props: Props) => {
             >
                 <Box>
                     <VStack>
-                        <Container h={'12vh'} p={1}>
+                        <Container h={'10vh'} p={1} mb={2}>
                             <HStack gap={'0.2rm'} paddingBottom={2}>
                                 {TbLetterComponents.map((Component, index) => {
                                     if (Component.name === "TbSeparator") {
@@ -63,8 +71,45 @@ const Multiplayer = (props: Props) => {
                                 Embark on a city text adventure.
                             </Text>
                         </Container>
-                        <Container h={'75vh'} bgColor={'red'} p={1}>
+                        <Divider />
+                        <Container h={'72vh'}  p={2}>
+                            <Heading size="md" mb={3}>Setup Game</Heading>
+
+                            <HStack spacing={4} mb={4}>
+                                <Button onClick={() => {}}>Create Game</Button>
+                                <Button onClick={() => {}}>Join Game</Button>
+                            </HStack>
+
+                                <HStack spacing={3} align="stretch">
+                                    <Input
+                                        placeholder={'Game Code'}
+                                        value={gameCode}
+                                        onChange={(e) => setGameCode(e.target.value)}
+                                        isReadOnly={true}
+                                    />
+                                    <Button colorScheme="green" onClick={() => {}}>
+                                        Join
+                                    </Button>
+                                </HStack>
+
+                            {members.length > 0 && (
+                                <Table variant="simple" mt={4}>
+                                    <Thead>
+                                        <Tr>
+                                            <Th>Members</Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {members.map((member, index) => (
+                                            <Tr key={index}>
+                                                <Td>{member}</Td>
+                                            </Tr>
+                                        ))}
+                                    </Tbody>
+                                </Table>
+                            )}
                         </Container>
+                        <Divider />
                         <Container h="7vh" p={1}>
                             <Flex justifyContent="space-between" alignItems="center" padding={1}>
                                 <Flex alignItems="center">

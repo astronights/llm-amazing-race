@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <main>
       <ChakraProvider theme={theme}>
-          <App />
+        <App />
       </ChakraProvider>
     </main>
   );
