@@ -6,7 +6,7 @@ mongo_payload = {
     'collection': 'cities',
     'database': 'osm',
     'dataSource': 'cluster-e0925482',
-    'limit': '50000'
+    'limit': 49000
 }
 
 mongo_headers = {
