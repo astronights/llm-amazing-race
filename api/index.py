@@ -8,16 +8,16 @@ app = Flask(__name__)
 def hello_world():
     return '<p>Hello, World!</p>'
 
-@app.get('/api/cities')
+@app.get('/api/city/all')
 def all_cities():
     return get_all_cities()
 
-@app.get('/api/coor/<city>')
+@app.get('/api/city/<city>')
 def city_coords(city: str):
     coords = get_coordinates(city)
     return {'city': city, 'lat': coords[0], 'lng': coords[1]}
 
-@app.get('/api/attr/<city>')
+@app.get('/api/city/<city>/attr')
 def city_attrs(city: str):
     coords = get_coordinates(city)
     ats = get_attractions(*coords)

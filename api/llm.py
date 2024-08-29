@@ -1,13 +1,9 @@
 import os
-from dotenv import load_dotenv, find_dotenv
-
 from ast import literal_eval
+
 import google.generativeai as genai
 
 from .prompt import puzzle
-
-load_dotenv(find_dotenv())
-
 
 def chat(city, sights, n=10):
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
