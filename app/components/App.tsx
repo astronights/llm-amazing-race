@@ -1,9 +1,9 @@
 import '../assets/app.sass';
-// import NavBar from './NavBar';
-// import Game from './Game';
-// import About from './About';
-// import Rules from './Rules';
+import Game from './Game';
+import Rules from './Rules';
+import Multiplayer from './Multiplayer';
 import { useState } from 'react';
+import { Flex } from '@chakra-ui/react';
 
 
 const App = () => {
@@ -14,11 +14,10 @@ const App = () => {
 
   return (
     <>
-      {/* <NavBar color={color} updatePage={setPage} />
-
-      {page === "game" && <Game color={color} updatePage={setPage}/>}
-      {page === "about" && <About color={color} />}
-      {page === "rules" && <Rules color={color}/>} */}
+        <Flex>
+            <Multiplayer color={color}/>
+            <Game color={color} />
+        </Flex>
     </>
   );
 }
