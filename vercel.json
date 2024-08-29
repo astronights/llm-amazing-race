@@ -1,7 +1,12 @@
 {
-    "functions": {
-      "api/**/*": {
-        "maxDuration": 60
-      }
+  "functions": {
+    "api/**/*": {
+      "maxDuration": 60
     }
+  },
+  "build": {
+    "exclude": [
+      "@next/swc-win32-x64-msvc"
+    ]
   }
+}
