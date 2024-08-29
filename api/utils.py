@@ -5,13 +5,14 @@ import pandas as pd
 from .overpass import attractions, query, url
 
 fpath = './public/worldcities.csv'
-df_city = pd.read_csv(fpath)
 radius = 5000
 
 def get_all_cities():
+    df_city = pd.read_csv(fpath)
     return df_city['city_ascii'].values.tolist()
 
 def get_coordinates(city: str):
+    df_city = pd.read_csv(fpath)
     return df_city.loc[df_city['city_ascii']==city, ['lat', 'lng']].astype(float).values[0]
 
 def detail(item: dict):
