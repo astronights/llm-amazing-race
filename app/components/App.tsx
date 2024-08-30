@@ -1,5 +1,5 @@
 import Chat from './Chat';
-import SetUp from './Setup';
+import Blueprint from './Blueprint';
 import { Flex } from '@chakra-ui/react';
 
 import '../assets/app.sass';
@@ -30,7 +30,7 @@ const App = () => {
     return (
         <>
             <Flex>
-                <SetUp color={color} city={city} progress={play}/>
+                <Blueprint color={color} city={city} progress={play}/>
                 <Chat color={color} name={progress.name} city={city} />
             </Flex>
         </>

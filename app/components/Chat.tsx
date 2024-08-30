@@ -4,9 +4,15 @@ import {
     useColorModeValue,
     Button,
     Divider,
-    VStack
+    VStack,
+    useToken,
+    useColorMode
 } from "@chakra-ui/react"
+import { useMeasure } from "react-use";
+
 import { City } from "../types";
+import Map from './Map';
+
 
 interface Props {
     color: string;
@@ -16,6 +22,10 @@ interface Props {
 
 const Chat = (props: Props) => {
 
+    const [ref, { width }] = useMeasure();
+    const { colorMode } = useColorMode();
+    const bgColor = useToken('colors', useColorModeValue("gray.200", "gray.800"))
+
     return (
         <>
             <Box
@@ -23,6 +33,7 @@ const Chat = (props: Props) => {
                 h={'100vh'}
                 bg={useColorModeValue("gray.200", "gray.800")}
                 p={2}
+                ref={ref}
             >
                 <Box>
                     <VStack>
@@ -41,8 +52,8 @@ const Chat = (props: Props) => {
 
                         </Container>
                         <Divider />
-                        <Container h={'72vh'} p={2}>
-
+                        <Container h={'72vh'} p={2} justifyContent={'center'}>
+                            <Map width={width} color={bgColor} mode={colorMode} />
                         </Container>
                         <Divider />
                         <Container h="7vh" p={1}>

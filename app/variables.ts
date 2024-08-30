@@ -16,4 +16,6 @@ const socials = {
     linkedin: 'https://www.linkedin.com/in/shubhankar-agrawal/'
 }
 
-export {colors, socials}
+const server = 'http://localhost:5328'
+
+export {colors, socials, server}

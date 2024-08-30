@@ -3,15 +3,14 @@ import {
     Button, Text, Heading, Input, Divider,
     useColorModeValue, useColorMode,
     Tr, Th, Table, Thead, Tbody, Td,
-    InputGroup, InputRightElement, InputLeftAddon,
+    InputGroup, InputRightElement, InputLeftAddon
 } from "@chakra-ui/react";
 import { ArrowRightIcon, AtSignIcon, CheckIcon, LinkIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
-import '../assets/multiplayer.sass'
+import '../assets/blueprint.sass'
 import type { City, Play } from '../types'
 import { socials } from "../variables";
-
 
 interface Props {
     color: string;
@@ -19,7 +18,7 @@ interface Props {
     progress: Play
 }
 
-const SetUp = (props: Props) => {
+const Blueprint = (props: Props) => {
 
     const [player, setPlayer] = useState('');
     const [nameInput, setNameInput] = useState('');
@@ -54,19 +53,14 @@ const SetUp = (props: Props) => {
                         </Container>
                         <Divider />
                         <Container h={'72vh'} p={2}>
-                            <Heading size="sm" mb={3}>Set Up Your Game</Heading>
                             <HStack spacing={3} align="stretch" mb={4}>
                                 <InputGroup size={'sm'}>
-                                    <InputLeftAddon>Who:</InputLeftAddon>
+                                    <InputLeftAddon>Name:</InputLeftAddon>
                                     <Input
                                         placeholder={'Carmen Sandiago'}
                                         value={nameInput}
                                         onChange={(e) => setNameInput(e.target.value)}
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter' && player !== nameInput) {
-                                                setPlayer(nameInput)
-                                            }
-                                        }}
+                                        onKeyDown={(e) => (e.key === 'Enter' ? setPlayer(nameInput) : null)}
                                     />
                                     {player != nameInput &&
                                         <InputRightElement>
@@ -77,6 +71,10 @@ const SetUp = (props: Props) => {
                                     }
                                 </InputGroup>
                             </HStack>
+                            <VStack spacing={2} mb={4} justifyContent={'center'} >
+                                <Text color={colorMode}>Where would you go?</Text>
+                                
+                            </VStack>
 
                             {player != '' &&
                                 (
@@ -131,4 +129,4 @@ const SetUp = (props: Props) => {
     )
 }
 
-export default SetUp;
+export default Blueprint;
