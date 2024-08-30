@@ -17,6 +17,7 @@
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "@types/three": "^0.167.2",
+    "axios": "^1.7.5",
     "chakra-react-select": "^4.9.1",
     "concurrently": "^8.0.1",
     "eslint": "8.0.0",
