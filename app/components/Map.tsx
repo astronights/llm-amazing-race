@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Globe from 'globe.gl';
-import * as THREE from 'three';
+import { Mesh, CircleGeometry, MeshBasicMaterial, DoubleSide, Vector3} from 'three';
 
 interface PointData {
     lat: number;
@@ -21,7 +21,7 @@ const Map = (props: Props) => {
     const globeContainerRef = useRef<HTMLDivElement | null>(null);
     const globeInstanceRef = useRef<ReturnType<typeof Globe> | null>(null);
     const [highlightedArea, setHighlightedArea] = useState<PointData | null>(null);
-    const previousCircleRef = useRef<THREE.Mesh | null>(null);
+    const previousCircleRef = useRef<Mesh | null>(null);
 
     useEffect(() => {
         if (globeContainerRef.current && !globeInstanceRef.current) {
@@ -57,15 +57,15 @@ const Map = (props: Props) => {
 
             if (highlightedArea) {
                 const { lat, lng, radius } = highlightedArea;
-                const circleGeometry = new THREE.CircleGeometry(radius, 64);
-                const material = new THREE.MeshBasicMaterial({
+                const circleGeometry = new CircleGeometry(radius, 64);
+                const material = new MeshBasicMaterial({
                     color: 'yellow',
                     opacity: 0.42,
                     transparent: true,
-                    side: THREE.DoubleSide,
+                    side: DoubleSide,
                 });
 
-                const circle = new THREE.Mesh(circleGeometry, material);
+                const circle = new Mesh(circleGeometry, material);
                 const { x, y, z } = globeInstanceRef.current.getCoords(lat, lng);
                 circle.position.set(x, y, z);
                 circle.lookAt(0, 0, 0); 
@@ -81,7 +81,7 @@ const Map = (props: Props) => {
                 const { x, y, z } = globeInstanceRef.current.getCoords(lat, lng);
 
                 globeInstanceRef.current.camera().position.set(x, y, z);
-                globeInstanceRef.current.camera().lookAt(new THREE.Vector3(0, 0, 0));
+                globeInstanceRef.current.camera().lookAt(new Vector3(0, 0, 0));
 
                 globeInstanceRef.current.controls().target.set(x, y, z);
                 globeInstanceRef.current.controls().update();
