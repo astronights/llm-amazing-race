@@ -3,11 +3,9 @@ import {
     Button, Text, Heading, Input, Divider,
     useColorModeValue, useColorMode,
     Tr, Th, Table, Thead, Tbody, Td,
-    InputGroup, InputLeftElement,
-    InputRightElement,
-    InputLeftAddon,
+    InputGroup, InputRightElement, InputLeftAddon,
 } from "@chakra-ui/react";
-import { ArrowRightIcon, AtSignIcon, CheckIcon, LinkIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { AtSignIcon, CheckIcon, LinkIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
 
 import '../assets/multiplayer.sass'
@@ -111,7 +109,7 @@ const Multiplayer = (props: Props) => {
                                         <InputGroup size={'sm'}>
                                             <InputLeftAddon>Who:</InputLeftAddon>
                                             <Input
-                                                placeholder={'Carmen Sandiago 42'}
+                                                placeholder={'Carmen Sandiago'}
                                                 value={nameInput}
                                                 onChange={(e) => setNameInput(e.target.value)}
                                             />
