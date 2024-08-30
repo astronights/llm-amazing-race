@@ -13,14 +13,6 @@ export const getCitiesWithinRadius = async (lat: number, lng: number, radius: nu
     return response.data;
 };
 
-// Get cities by country
-export const getCitiesByCountry = async (country: string) => {
-    const response = await axios.get(`${server}/cities/by-country`, {
-        params: { country }
-    });
-    return response.data;
-};
-
 // Get city details
 export const getCityDetails = async (name: string) => {
     const response = await axios.get(`${server}/cities/${name}`);

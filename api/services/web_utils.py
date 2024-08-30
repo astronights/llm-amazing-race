@@ -7,8 +7,8 @@ from ..variables.mongo import mongo_url, mongo_headers, mongo_payload
 
 
 def get_all_cities():
-    body = {**mongo_payload, 'projection': {'city_ascii': 1,
-                                            'country': 1, 'lat': 1, 'lng': 1, '_id': 0}}
+    body = {**mongo_payload, 'projection': {'city_ascii': 1, 'city': 1,
+                                            'country': 1, 'lat': 1, 'lng': 1, 'id': 1}}
     response = requests.post(mongo_url, headers=mongo_headers, json=body)
 
     cities = response.json().get('documents', [])
@@ -17,7 +17,8 @@ def get_all_cities():
     for city in cities:
         country = city.get('country')
         grouped_by_country[country].append({
-            'name': city['city_ascii'], 'lat': city['lat'], 'lng': city['lng']
+            'name': city.get('city_ascii', city.get('city', '')), 
+            'lat': city['lat'], 'lng': city['lng'], 'id': city['id']
         })
 
     return dict(grouped_by_country)

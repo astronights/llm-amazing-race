@@ -1,26 +1,18 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Globe from 'globe.gl';
-import { Mesh, CircleGeometry, MeshBasicMaterial, DoubleSide, Vector3} from 'three';
-
-interface PointData {
-    lat: number;
-    lng: number;
-    radius: number;
-}
+import { Mesh, CircleGeometry, MeshBasicMaterial, DoubleSide, Vector3 } from 'three';
 
 interface Props {
     width: number;
     color: string;
     mode: string;
-    lat?: number;
-    lng?: number;
+    lat: number;
+    lng: number;
 }
 
 const Map = (props: Props) => {
-
     const globeContainerRef = useRef<HTMLDivElement | null>(null);
     const globeInstanceRef = useRef<ReturnType<typeof Globe> | null>(null);
-    const [highlightedArea, setHighlightedArea] = useState<PointData | null>(null);
     const previousCircleRef = useRef<Mesh | null>(null);
 
     useEffect(() => {
@@ -29,7 +21,6 @@ const Map = (props: Props) => {
 
             globe.controls().autoRotate = true;
             globe.controls().autoRotateSpeed = 0.5;
-
             globe.controls().minDistance = 250;
             globe.controls().maxDistance = 250;
 
@@ -42,58 +33,80 @@ const Map = (props: Props) => {
                 .globeImageUrl(`//unpkg.com/three-globe/example/img/earth-${props.mode === 'dark' ? 'night' : 'day'}.jpg`)
                 .width(props.width * 0.7)
                 .height(props.width * 0.40)
-                // .width(props.width * 0.7)
-                // .height(props.width * 0.65)
                 .backgroundColor(props.color);
 
-            if (previousCircleRef.current) {
-                globeInstanceRef.current.scene().remove(previousCircleRef.current);
-                previousCircleRef.current.geometry.dispose();
+            if (props.lat !== 0 && props.lng !== 0) {
+                const { lat, lng } = props;
 
-                Array.isArray(previousCircleRef.current.material) ?
-                    previousCircleRef.current.material.forEach((mat) => mat.dispose()) :
-                    previousCircleRef.current.material.dispose();
-            }
+                const globe = globeInstanceRef.current;
+                const camera = globe.camera();
+                const controls = globe.controls();
 
-            if (highlightedArea) {
-                const { lat, lng, radius } = highlightedArea;
-                const circleGeometry = new CircleGeometry(radius, 64);
-                const material = new MeshBasicMaterial({
-                    color: 'yellow',
-                    opacity: 0.42,
-                    transparent: true,
-                    side: DoubleSide,
-                });
+                const target = globe.getCoords(lat, lng);
+                const distance = camera.position.length();
+                const newCameraPosition = new Vector3()
+                    .copy(target)
+                    .normalize()
+                    .multiplyScalar(distance);
 
-                const circle = new Mesh(circleGeometry, material);
-                const { x, y, z } = globeInstanceRef.current.getCoords(lat, lng);
-                circle.position.set(x, y, z);
-                circle.lookAt(0, 0, 0); 
+                const tweenDuration = 1000; // 1 second
+                const startPosition = camera.position.clone();
+                const startTime = performance.now();
 
-                globeInstanceRef.current.scene().add(circle);
-                previousCircleRef.current = circle;
-            }
+                const animate = () => {
+                    const elapsed = performance.now() - startTime;
+                    const t = Math.min(elapsed / tweenDuration, 1);
 
-            if (props.lat !== undefined && props.lng !== undefined) {
-                const lat = props.lat
-                const lng = props.lng;
+                    camera.position.lerpVectors(startPosition, newCameraPosition, t);
+                    controls.update();
 
-                const { x, y, z } = globeInstanceRef.current.getCoords(lat, lng);
+                    if (t < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        controls.autoRotate = true;
+                    }
+                };
 
-                globeInstanceRef.current.camera().position.set(x, y, z);
-                globeInstanceRef.current.camera().lookAt(new Vector3(0, 0, 0));
-
-                globeInstanceRef.current.controls().target.set(x, y, z);
-                globeInstanceRef.current.controls().update();
+                controls.autoRotate = false; 
+                animate();
 
                 handleGlobeClick({ lat, lng });
             }
         }
-    }, [highlightedArea, props.width, props.mode, props.lat, props.lng]);
+    }, [props.width, props.mode, props.lat, props.lng]);
 
     const handleGlobeClick = ({ lat, lng }: { lat: number; lng: number }) => {
-        const radius = 10;
-        setHighlightedArea({ lat, lng, radius });
+        if (globeInstanceRef.current) {
+            const globe = globeInstanceRef.current;
+
+            if (previousCircleRef.current) {
+                globe.scene().remove(previousCircleRef.current);
+                previousCircleRef.current.geometry.dispose();
+                if (Array.isArray(previousCircleRef.current.material)) {
+                    previousCircleRef.current.material.forEach(mat => mat.dispose());
+                } else {
+                    previousCircleRef.current.material.dispose();
+                }
+                previousCircleRef.current = null;
+            }
+
+            const radius = 10;
+            const circleGeometry = new CircleGeometry(radius, 64);
+            const material = new MeshBasicMaterial({
+                color: 'yellow',
+                opacity: 0.42,
+                transparent: true,
+                side: DoubleSide,
+            });
+
+            const circle = new Mesh(circleGeometry, material);
+            const { x, y, z } = globe.getCoords(lat, lng);
+            circle.position.set(x, y, z);
+            circle.lookAt(0, 0, 0);
+
+            globe.scene().add(circle);
+            previousCircleRef.current = circle;
+        }
     };
 
     return <div ref={globeContainerRef} />;

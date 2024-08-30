@@ -1,21 +1,23 @@
 import {
     Flex, Container, HStack, VStack, Box,
-    Button, Text, Heading, Input, Divider,
+    Button, Text, Heading, Input, Divider, Select,
     useColorModeValue, useColorMode,
     Tr, Th, Table, Thead, Tbody, Td,
     InputGroup, InputRightElement, InputLeftAddon
 } from "@chakra-ui/react";
 import { ArrowRightIcon, AtSignIcon, CheckIcon, LinkIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import '../assets/blueprint.sass'
-import type { City, Play } from '../types'
 import { socials } from "../variables";
+import { getAllCities } from "./routes";
+import type { City, Play } from '../types'
 
 interface Props {
     color: string;
     city: City;
-    progress: Play
+    progress: Play;
+    updateCity: Function;
 }
 
 const Blueprint = (props: Props) => {
@@ -23,7 +25,33 @@ const Blueprint = (props: Props) => {
     const [player, setPlayer] = useState('');
     const [nameInput, setNameInput] = useState('');
 
+    const [cities, setCities] = useState({});
+    const [pickCity, setPickCity] = useState<string>('');
+    const [pickCountry, setPickCountry] = useState<string>('');
+
+    const [gameCity, setGameCity] = useState<City>();
+
+    const handleCountryChange = (e) => {
+        setPickCountry(e.target.value);
+        setPickCity('');
+    };
+
+    const handleCityChange = (e) => {
+        setPickCity(e.target.value);
+        const cityObject = cities[pickCountry].find(city => city.name === e.target.value);
+        setGameCity(cityObject || null);
+        props.updateCity(cityObject || null);
+    };
+
     const { colorMode, toggleColorMode } = useColorMode();
+
+    useEffect(() => {
+        const fetchCities = async () => {
+            const allCities = await getAllCities();
+            setCities(allCities);
+        };
+        fetchCities();
+    }, []);
 
     const getLink = (key: string) => {
         window.open(socials[key], "_blank", "noreferrer,noopener");
@@ -47,9 +75,7 @@ const Blueprint = (props: Props) => {
                             <HStack gap={'0.2rm'} paddingBottom={2}>
                                 <Heading as='h3' size='md' letterSpacing={1} color={props.color}>LLM Amazing Race</Heading>
                             </HStack>
-                            <Text py={2}>
-                                Embark on a city text adventure.
-                            </Text>
+                            <Text py={2}>Embark on a city text adventure.</Text>
                         </Container>
                         <Divider />
                         <Container h={'72vh'} p={2}>
@@ -73,14 +99,24 @@ const Blueprint = (props: Props) => {
                             </HStack>
                             <VStack spacing={2} mb={4} justifyContent={'center'} >
                                 <Text color={colorMode}>Where would you go?</Text>
-                                
+                                <Select size={'sm'} placeholder={'Select Country'} value={pickCountry} onChange={handleCountryChange}>
+                                    {Object.keys(cities).map(country => (
+                                        <option key={country} value={country}>{country}</option>
+                                    ))}
+                                </Select>
+
+                                <Select size={'sm'} placeholder={'Select City'} value={pickCity} onChange={handleCityChange} isDisabled={!pickCountry}>
+                                    {pickCountry && cities[pickCountry].map(city => (
+                                        <option key={city.id} value={city.name}>{city.name}</option>
+                                    ))}
+                                </Select>
                             </VStack>
 
                             {player != '' &&
                                 (
                                     <HStack spacing={2} mb={4} >
                                         <Text>The world is waiting. </Text>
-                                        <Button size={'sm'} onClick={startGame} rightIcon={<ArrowRightIcon></ArrowRightIcon>}>Let's Go</Button>
+                                        <Button size={'sm'} bgColor='green' onClick={startGame} rightIcon={<ArrowRightIcon></ArrowRightIcon>}>Let's Go</Button>
                                     </HStack>
                                 )
                             }

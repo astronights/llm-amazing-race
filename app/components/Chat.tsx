@@ -53,7 +53,9 @@ const Chat = (props: Props) => {
                         </Container>
                         <Divider />
                         <Container h={'72vh'} p={2} justifyContent={'center'}>
-                            <Map width={width} color={bgColor} mode={colorMode} />
+                            <Map width={width} color={bgColor} mode={colorMode}
+                                lat={props.city.lat} lng={props.city.lng}
+                            />
                         </Container>
                         <Divider />
                         <Container h="7vh" p={1}>

@@ -30,8 +30,8 @@ const App = () => {
     return (
         <>
             <Flex>
-                <Blueprint color={color} city={city} progress={play}/>
-                <Chat color={color} name={progress.name} city={city} />
+                <Blueprint color={color} city={city} progress={play} updateCity={setCity}/>
+                <Chat color={color} name={progress.name} city={city}/>
             </Flex>
         </>
     );
