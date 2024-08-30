@@ -1,23 +1,26 @@
-import { Role } from './service/variables';
-
-type Room = {
-    id: string
+type City = {
     name: string
-    created_at: number
+    lat: number
+    lng: number
 }
 
-type Member = {
-    sid: string
+type Task = {
     name: string
-    role: Role
-    score: number
+    time: number
+    attempts: number
+}
+
+type Progress = {
     level: number
+    travel: Task
+    task: Task
 }
 
-type Game = {
-    room: Room
-    members: Member[]
-    started: boolean
-};
+type Play = {
+    name: string
+    progress?: Progress[]
+    start: number
+    end: number
+}
 
-export {Room, Role, Member, Game}
+export {City, Task, Progress, Play}

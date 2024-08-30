@@ -1,5 +1,4 @@
 Flask==3.0.3
-flask_socketio==5.3.6
 
 uuid==1.30
 requests==2.32.3

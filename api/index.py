@@ -1,35 +1,12 @@
-from .utils import get_all_cities, get_coordinates, get_attractions
-from .llm import chat
+from .services.web_utils import get_all_cities, get_coordinates, get_attractions
+from .services.llm import chat
 
 import uuid
 from flask import Flask, request
-from flask_socketio import SocketIO, join_room, leave_room, send, emit
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
 
-rooms = {}
-
-@socketio.on('createRoom')
-def handle_create_room(room_name: str):
-
-    room_id = uuid.uuid4()
-    rooms[room_id] = {'name': room_name, 'members': [request.sid]}
-    
-    join_room(room_id)
-    print(room_name, room_id, request.sid)
-    emit('roomCreated', {'room_name': room_name, 'room_id': str(room_id), 'creator_id': request.sid})
-
-@socketio.on('joinRoom')
-def handle_join_room(room_name):
-    if room_name in rooms and len(rooms[room_name]) < 10:
-        rooms[room_name].append(request.sid)
-        join_room(room_name)
-        emit('playerJoined', rooms[room_name], room=room_name)
-    else:
-        emit('roomFull', room=request.sid)
-
-@app.route('/api/python')
+@app.route('/api/hello')
 def hello_world():
     return '<p>Hello, World!</p>'
 

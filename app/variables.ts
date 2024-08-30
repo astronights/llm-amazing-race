@@ -16,10 +16,4 @@ const socials = {
     linkedin: 'https://www.linkedin.com/in/shubhankar-agrawal/'
 }
 
-enum Role {
-    HOST,
-    PLAYER,
-    OTHER
-}
-
-export {colors, socials, Role}
+export {colors, socials}

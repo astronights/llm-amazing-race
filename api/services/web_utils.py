@@ -1,8 +1,8 @@
 import random
 import requests
 
-from .variables import (mongo_url, mongo_headers, mongo_payload,
-                        overpass_url, attractions, query)
+from ..variables.overpass import url as overpass_url, attractions, query
+from ..variables.mongo import mongo_url, mongo_headers, mongo_payload
 
 
 def get_all_cities():
