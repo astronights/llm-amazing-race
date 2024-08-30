@@ -18,6 +18,7 @@ interface Props {
     city: City;
     progress: Play;
     updateCity: Function;
+    updateName: Function;
 }
 
 const Blueprint = (props: Props) => {
@@ -53,6 +54,10 @@ const Blueprint = (props: Props) => {
         fetchCities();
     }, []);
 
+    useEffect(() => {
+        props.updateName(player)
+    }, [player]);
+
     const getLink = (key: string) => {
         window.open(socials[key], "_blank", "noreferrer,noopener");
     }
@@ -72,7 +77,7 @@ const Blueprint = (props: Props) => {
                 <Box>
                     <VStack>
                         <Container h={'10vh'} p={1} mb={2}>
-                            <HStack gap={'0.2rm'} paddingBottom={2}>
+                            <HStack gap={'0.2rm'} paddingBottom={1}>
                                 <Heading as='h3' size='md' letterSpacing={1} color={props.color}>LLM Amazing Race</Heading>
                             </HStack>
                             <Text py={2}>Embark on a city text adventure.</Text>

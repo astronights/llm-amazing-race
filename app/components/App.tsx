@@ -27,11 +27,19 @@ const App = () => {
     const [city, setCity] = useState(location);
     const [progress, setProgress] = useState(play);
 
+    const updateName = (name: string) => {
+        setProgress({...progress, name: name})
+    }
+
+    const updateCity = (lat: number, lng: number) => {
+        setCity({name: '', lat: lat, lng: lng})
+    }
+
     return (
         <>
             <Flex>
-                <Blueprint color={color} city={city} progress={play} updateCity={setCity}/>
-                <Chat color={color} name={progress.name} city={city}/>
+                <Blueprint color={color} city={city} progress={play} updateCity={setCity} updateName={updateName}/>
+                <Chat color={color} name={progress.name} city={city} updateCoor={updateCity}/>
             </Flex>
         </>
     );

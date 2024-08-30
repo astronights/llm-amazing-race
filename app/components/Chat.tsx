@@ -17,7 +17,8 @@ import Map from './Map';
 interface Props {
     color: string;
     name: string;
-    city: City
+    city: City;
+    updateCoor: Function;
 }
 
 const Chat = (props: Props) => {
@@ -38,7 +39,7 @@ const Chat = (props: Props) => {
                 <Box>
                     <VStack>
                         <Container h={'10vh'} p={1} mb={2} ml={0}>
-                            <HStack paddingBottom={2} justifyContent="flex-start">
+                            <HStack paddingBottom={1} justifyContent="flex-start">
                                 <Heading as='h3' size='md' letterSpacing={1} color={props.color}>
                                     {`Hello ${props.name}`}
                                 </Heading>
@@ -54,7 +55,7 @@ const Chat = (props: Props) => {
                         <Divider />
                         <Container h={'72vh'} p={2} justifyContent={'center'}>
                             <Map width={width} color={bgColor} mode={colorMode}
-                                lat={props.city.lat} lng={props.city.lng}
+                                lat={props.city.lat} lng={props.city.lng} updateCoor={props.updateCoor}
                             />
                         </Container>
                         <Divider />

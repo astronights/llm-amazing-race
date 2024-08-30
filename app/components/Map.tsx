@@ -8,6 +8,7 @@ interface Props {
     mode: string;
     lat: number;
     lng: number;
+    updateCoor: Function;
 }
 
 const Map = (props: Props) => {
