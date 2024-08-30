@@ -8,8 +8,7 @@ import {
     Divider
 } from "@chakra-ui/react";
 import '../assets/multiplayer.sass'
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { AtSignIcon, LinkIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
 interface Props {
@@ -124,16 +123,12 @@ const Multiplayer = (props: Props) => {
                         <Container h="7vh" p={1}>
                             <Flex justifyContent="space-between" alignItems="center" padding={1}>
                                 <Flex alignItems="center">
-                                    <FaGithub
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={github}
-                                        size={20}
-                                    />
-                                    <FaLinkedin
-                                        style={{ cursor: 'pointer', marginLeft: '10px' }}
-                                        onClick={linkedin}
-                                        size={20}
-                                    />
+                                    <Button onClick={github} leftIcon={<LinkIcon />} colorScheme='teal' variant='ghost' size='sm'>
+                                        Github
+                                    </Button>
+                                    <Button onClick={linkedin} leftIcon={<AtSignIcon />} colorScheme='teal' variant='ghost' size='sm'>
+                                        LinkedIn
+                                    </Button>
                                 </Flex>
                                 <Button size="sm" onClick={toggleColorMode}>
                                     {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
