@@ -94,7 +94,7 @@ const Multiplayer = (props: Props) => {
                                 (<HStack spacing={3} align="stretch">
                                     <Input
                                         placeholder={role == 'host' ? 'Room Name' : 'Game Code'}
-                                        value={''}
+                                        value={role == 'host' ? roomName : gameCode}
                                         onChange={(e) => role == 'host' ? setRoomName(e.target.value) : setGameCode(e.target.value)}
                                     />
                                     <Button colorScheme="green" onClick={role == 'host' ? createGame : joinGame}>
