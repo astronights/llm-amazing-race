@@ -3,10 +3,5 @@
     "api/**/*": {
       "maxDuration": 60
     }
-  },
-  "build": {
-    "ignore": [
-      "@next/swc-win32-x64-msvc"
-    ]
   }
 }
