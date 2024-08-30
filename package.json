@@ -5,7 +5,7 @@
   "scripts": {
     "flask-dev": "pip install -r requirements.txt && python -m flask --app api/index run -p 5328",
     "next-dev": "next dev",
-    "dev": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev\"",
+    "dev": "concurrently \"npm run next-dev\" \"npm run flask-dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,10 +21,10 @@
     "concurrently": "^8.0.1",
     "eslint": "8.0.0",
     "eslint-config-next": "^14.2.7",
+    "globe.gl": "^2.32.5",
     "next": "^14.2.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-globe.gl": "^2.27.2",
     "react-use": "^17.5.1",
     "sass": "^1.77.8",
     "typescript": "5.0.4"
