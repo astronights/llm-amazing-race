@@ -7,10 +7,10 @@ import {
     Tr, Th, Table, Thead, Tbody, Td,
     Divider
 } from "@chakra-ui/react";
+import '../assets/multiplayer.sass'
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { useState } from "react";
-const TbIcons = require("react-icons/tb");
 
 interface Props {
     color: string;
@@ -33,6 +33,8 @@ const Multiplayer = (props: Props) => {
     };
 
     const [gameCode, setGameCode] = useState('');
+    const [role, setRole] = useState('');
+    const [roomName, setRoomName] = useState('');
     const [members, setMembers] = useState([]);
 
     const { colorMode, toggleColorMode } = useColorMode();
@@ -44,8 +46,23 @@ const Multiplayer = (props: Props) => {
         window.open(`https://github.com/astronights`, "_blank", "noreferrer,noopener");
     };
 
-    const TbLetterComponents = 'LLM AMAZING RACE'.split('').map(
-        (letter) => letter == ' ' ? TbIcons['TbSeparator'] : TbIcons[`TbLetter${letter}`]);
+    const updateRole = (val: string) => {
+        setRole(val);
+    }
+
+    const createGame = () => {
+        setGameCode('test-code');
+        //TODO: Start Socket
+    }
+
+    const joinGame = () => {
+        setRole('player');
+        //TODO: Connect to Socket
+    }
+
+    const copyCode = () => {
+        navigator.clipboard.writeText(gameCode);
+    }
 
     return (
         <>
@@ -58,39 +75,33 @@ const Multiplayer = (props: Props) => {
                     <VStack>
                         <Container h={'10vh'} p={1} mb={2}>
                             <HStack gap={'0.2rm'} paddingBottom={2}>
-                                {TbLetterComponents.map((Component, index) => {
-                                    if (Component.name === "TbSeparator") {
-                                        return <Component key={index} color={'transparent'} />;
-                                    } else {
-                                        return <Component key={index} color={colors[props.color]} />
-                                    }
-                                }
-                                )}
+                                <Heading as='h3' size='md' letterSpacing={1} color={props.color}>LLM Amazing Race</Heading>
                             </HStack>
                             <Text py={2}>
                                 Embark on a city text adventure.
                             </Text>
                         </Container>
                         <Divider />
-                        <Container h={'72vh'}  p={2}>
-                            <Heading size="md" mb={3}>Setup Game</Heading>
+                        <Container h={'72vh'} p={2}>
+                            <Heading size="sm" mb={3}>Lobby</Heading>
 
-                            <HStack spacing={4} mb={4}>
-                                <Button onClick={() => {}}>Create Game</Button>
-                                <Button onClick={() => {}}>Join Game</Button>
+                            <HStack spacing={2} mb={4} justifyContent={'center'}>
+                                <Button onClick={() => updateRole('host')}>Create Game</Button>
+                                <Button onClick={() => updateRole('player')}>Join Game</Button>
                             </HStack>
 
-                                <HStack spacing={3} align="stretch">
+                            {role != '' &&
+                                (<HStack spacing={3} align="stretch">
                                     <Input
-                                        placeholder={'Game Code'}
-                                        value={gameCode}
-                                        onChange={(e) => setGameCode(e.target.value)}
-                                        isReadOnly={true}
+                                        placeholder={role == 'host' ? 'Room Name' : 'Game Code'}
+                                        value={''}
+                                        onChange={(e) => role == 'host' ? setRoomName(e.target.value) : setGameCode(e.target.value)}
                                     />
-                                    <Button colorScheme="green" onClick={() => {}}>
-                                        Join
+                                    <Button colorScheme="green" onClick={role == 'host' ? createGame : joinGame}>
+                                        {role == 'host' ? 'Start' : 'Join'}
                                     </Button>
-                                </HStack>
+                                </HStack>)
+                            }
 
                             {members.length > 0 && (
                                 <Table variant="simple" mt={4}>
@@ -130,45 +141,6 @@ const Multiplayer = (props: Props) => {
                             </Flex>
                         </Container>
                     </VStack>
-                    {/* <Flex
-                        bg={useColorModeValue("gray.100", "gray.900")}
-                        px={4}
-                        h={16}
-                        boxShadow={"none"}
-                        zIndex="sticky"
-                        position="fixed"
-                        as="header"
-                        alignItems={"center"}
-                        justifyContent={"space-between"}
-                        w="25%"
-                    >
-                        <HStack gap={'0.3rm'}>
-                            {TbLetterComponents.map((Component, index) => {
-                                if (Component.name === "TbSeparator") {
-                                    return <Component key={index} color={'transparent'} />;
-                                } else {
-                                    return <Component key={index} color={colors[props.color]} />
-                                }
-                            }
-                            )}
-                        </HStack>
-                    </Flex>
-                    <Box
-                        bg={useColorModeValue("gray.100", "gray.900")}
-                        // px={4}
-                        h={16}
-                        // boxShadow={"none"}
-                        zIndex="sticky"
-                        position="fixed"
-                        as="footer"
-                        alignItems={"center"}
-                        justifyContent={"space-between"}
-                        w="25%"
-                    >
-                        <Button onClick={toggleColorMode}>
-                            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-                        </Button>
-                    </Box>*/}
                 </Box>
             </Box>
         </>
