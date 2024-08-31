@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Globe from '../utils/globe'
+import Globe from '../globe/index'
 import { Mesh, CircleGeometry, MeshBasicMaterial, DoubleSide, Vector3 } from 'three';
 
 interface Props {
