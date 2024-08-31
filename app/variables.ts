@@ -16,6 +16,12 @@ const socials = {
     linkedin: 'https://www.linkedin.com/in/shubhankar-agrawal/'
 }
 
-const server = 'https://llm-amazing-race-ai.vercel.app'
+const servers = {
+    'development': 'https://localhost:5328',
+    'production': 'https://llm-amazing-race-ai.vercel.app'
+}
+
+const currentEnvironment = process.env.NEXT_ENV || 'development';
+const server = servers[currentEnvironment];
 
 export {colors, socials, server}
