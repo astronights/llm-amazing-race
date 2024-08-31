@@ -46,7 +46,7 @@ const Chat = (props: Props) => {
                             </HStack>
                             <HStack>
                                 <Text py={2}>
-                                    Where in the world will you travel to today?
+                                    Pack your bags and get ready for an adventure!
                                 </Text>
 
                             </HStack>

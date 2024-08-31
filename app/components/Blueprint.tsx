@@ -173,12 +173,14 @@ const Blueprint = (props: Props) => {
 
                             </VStack>
 
-                            {player != '' &&
+                            {player != '' && gameCity.name != '' && 
                                 (
-                                    <HStack spacing={2} mb={4} >
-                                        <Text>The world is waiting. </Text>
-                                        <Button size={'sm'} bgColor='green' onClick={startGame} rightIcon={<ArrowRightIcon></ArrowRightIcon>}>Let's Go</Button>
-                                    </HStack>
+                                    <VStack pt={2}>
+                                    <Flex justifyContent="space-between" alignItems="center">
+                                        <Text mr={2}>The world is waiting </Text>
+                                        <Button size={'sm'} bgColor='teal' onClick={startGame} rightIcon={<ArrowRightIcon />}>Let's Go</Button>
+                                    </Flex>
+                                    </VStack>
                                 )
                             }
 
