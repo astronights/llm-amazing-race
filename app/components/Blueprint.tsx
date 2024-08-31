@@ -17,6 +17,7 @@ interface Props {
     color: string;
     city: City;
     progress: Play;
+    updateStatus: Function;
     updateCity: Function;
     updateName: Function;
 }
@@ -92,7 +93,9 @@ const Blueprint = (props: Props) => {
     }
 
     const startGame = () => {
-
+        props.updateCity(gameCity);
+        props.updateName(player);
+        props.updateStatus(true);
     }
 
     return (
@@ -173,7 +176,7 @@ const Blueprint = (props: Props) => {
 
                             </VStack>
 
-                            {player != '' && gameCity.name != '' && 
+                            {player != '' && gameCity && gameCity?.name != '' && 
                                 (
                                     <VStack pt={2}>
                                     <Flex justifyContent="space-between" alignItems="center">

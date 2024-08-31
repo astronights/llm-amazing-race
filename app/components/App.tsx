@@ -5,6 +5,7 @@ import { Flex } from '@chakra-ui/react';
 import '../assets/app.sass';
 import type { City, Play } from '../types';
 import { useState } from 'react';
+import Stats from './Stats';
 
 
 let location: City = {
@@ -24,22 +25,40 @@ const App = () => {
     // blue, cyan, gray, green, orange, pink, purple, red, teal, yellow
     const color = "teal";
 
+    const [status, setStatus] = useState(true);
     const [city, setCity] = useState(location);
     const [progress, setProgress] = useState(play);
 
     const updateName = (name: string) => {
-        setProgress({...progress, name: name})
+        setProgress({ ...progress, name: name })
     }
 
     const updateCity = (lat: number, lng: number) => {
-        setCity({name: '', lat: lat, lng: lng})
+        setCity({ name: '', lat: lat, lng: lng })
     }
 
     return (
         <>
             <Flex>
-                <Blueprint color={color} city={city} progress={play} updateCity={setCity} updateName={updateName}/>
-                <Chat color={color} name={progress.name} city={city} updateCoor={updateCity}/>
+                {!status ? (
+                    <Blueprint
+                        color={color}
+                        city={city}
+                        progress={progress}
+                        updateStatus={setStatus}
+                        updateCity={setCity}
+                        updateName={updateName} />
+                ) : (
+                    <Stats
+                        color={color}
+                        city={city}
+                        progress={progress}
+                        updateStatus={setStatus}
+                        updateCity={setCity}
+                        updateName={updateName} />
+                )}
+
+                <Chat color={color} name={progress.name} city={city} updateCoor={updateCity} />
             </Flex>
         </>
     );
