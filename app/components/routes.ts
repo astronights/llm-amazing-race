@@ -8,8 +8,12 @@ export const getAllCities = async () => {
 };
 
 export const getCitiesWithinRadius = async (lat: number, lng: number, radius: number) => {
-    const response = await axios.get(`${server}/cities/within-radius`, {
-        params: { lat, lng, radius }
+    const response = await axios.post(`${server}/api/city/nearby`, {
+        lat, lng, radius
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
     return response.data;
 };

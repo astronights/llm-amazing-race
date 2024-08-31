@@ -5,7 +5,7 @@ import {
     Tr, Th, Table, Thead, Tbody, Td,
     InputGroup, InputRightElement, InputLeftAddon
 } from "@chakra-ui/react";
-import { ArrowRightIcon, AtSignIcon, CheckIcon, LinkIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { ArrowRightIcon, AtSignIcon, CheckIcon, ChevronRightIcon, LinkIcon, MoonIcon, RepeatIcon, SunIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
 
 import '../assets/blueprint.sass'
@@ -31,7 +31,7 @@ const Blueprint = (props: Props) => {
     const [pickCountry, setPickCountry] = useState<string>('');
 
     const [gameCity, setGameCity] = useState<City>();
-    const [closeCities, setCloseCities] = useState<City[]>();
+    const [closeCities, setCloseCities] = useState([]);
 
     const handleCountryChange = (e) => {
         setPickCountry(e.target.value);
@@ -44,6 +44,24 @@ const Blueprint = (props: Props) => {
         setGameCity(cityObject || null);
         props.updateCity(cityObject || null);
     };
+
+    const shuffleGameCity = () => {
+        const allCountries = Object.keys(cities);
+        const shufflecountry = allCountries[Math.floor(Math.random() * allCountries.length)];
+        const shufflecity = cities[shufflecountry][Math.floor(Math.random() * cities[shufflecountry].length)];
+        setPickCountry(shufflecountry)
+        setPickCity(shufflecity.name)
+        setGameCity(shufflecity)
+        props.updateCity(shufflecity)
+    }
+
+    const mapCity = (country: string, city: string) => {
+        const cityObject = cities[country].find(ccity => ccity.name === city);
+        setPickCountry(country)
+        setPickCity(city)
+        setGameCity(cityObject)
+        props.updateCity(cityObject)
+    }
 
     const { colorMode, toggleColorMode } = useColorMode();
 
@@ -62,7 +80,7 @@ const Blueprint = (props: Props) => {
     useEffect(() => {
         if (props.city.name == '' && props.city.lat != 0 && props.city.lng != 0) {
             const fetchCities = async () => {
-                const nearbyCities = await getCitiesWithinRadius(props.city.lat, props.city.lng, 10);
+                const nearbyCities = await getCitiesWithinRadius(props.city.lat, props.city.lng, 1000);
                 setCloseCities(nearbyCities);
             };
             fetchCities();
@@ -80,7 +98,7 @@ const Blueprint = (props: Props) => {
     return (
         <>
             <Box
-                w={{ base: "100vw", md: "25vw" }}
+                w={{ base: "100vw", md: "30vw" }}
                 h={'100vh'}
                 p={2}
                 bg={useColorModeValue("gray.100", "gray.900")}
@@ -114,7 +132,12 @@ const Blueprint = (props: Props) => {
                                 </InputGroup>
                             </HStack>
                             <VStack spacing={2} mb={4} justifyContent={'center'} >
-                                <Text color={colorMode}>Where would you go?</Text>
+                                <Flex justifyContent="space-between" alignItems="center">
+                                    <Text color={colorMode} mr={2}>Pick your destination </Text>
+                                    <Button size={'sm'} leftIcon={<RepeatIcon />} onClick={shuffleGameCity}>
+                                        Shuffle
+                                    </Button>
+                                </Flex>
                                 <Select size={'sm'} placeholder={'Select Country'} value={pickCountry} onChange={handleCountryChange}>
                                     {Object.keys(cities).map(country => (
                                         <option key={country} value={country}>{country}</option>
@@ -126,6 +149,28 @@ const Blueprint = (props: Props) => {
                                         <option key={city.id} value={city.name}>{city.name}</option>
                                     ))}
                                 </Select>
+                            </VStack>
+                            <VStack>
+                                <HStack>
+                                    <Text align='left'>Explore Nearby Cities on the Map</Text>
+                                    <ChevronRightIcon />
+                                </HStack>
+                                {closeCities &&
+                                    (
+                                        <Flex
+                                            wrap="wrap"
+                                        >
+
+                                            {closeCities.slice(0, 10).map((ccity) => (
+                                                <Button variant={'ghost'} size={'xs'} key={ccity.id}
+                                                    colorScheme="teal" m={1} onClick={() => mapCity(ccity.country, ccity.name)}>
+                                                    {ccity.name}
+                                                </Button>
+                                            ))}
+                                        </Flex>
+                                    )
+                                }
+
                             </VStack>
 
                             {player != '' &&

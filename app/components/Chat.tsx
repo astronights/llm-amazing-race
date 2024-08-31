@@ -30,7 +30,7 @@ const Chat = (props: Props) => {
     return (
         <>
             <Box
-                w={{ base: "100vw", md: "75vw" }}
+                w={{ base: "100vw", md: "70vw" }}
                 h={'100vh'}
                 bg={useColorModeValue("gray.200", "gray.800")}
                 p={2}

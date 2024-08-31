@@ -107,6 +107,8 @@ const Map = (props: Props) => {
 
             globe.scene().add(circle);
             previousCircleRef.current = circle;
+
+            props.updateCoor(lat, lng);
         }
     };
 
