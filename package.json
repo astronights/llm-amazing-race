@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "flask-dev": "pip install -r requirements.txt && python -m flask --app api/index run -p 5328",
     "next-dev": "next dev",
-    "dev": "concurrently \"npm run next-dev\" \"npm run flask-dev\"",
+    "dev": "npm run next-dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,7 +18,6 @@
     "@types/react-dom": "18.2.4",
     "accessor-fn": "^1.5.1",
     "axios": "^1.7.5",
-    "concurrently": "^8.0.1",
     "eslint": "8.0.0",
     "eslint-config-next": "^14.2.7",
     "kapsule": "^1.14.5",
