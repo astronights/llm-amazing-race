@@ -16,6 +16,6 @@ const socials = {
     linkedin: 'https://www.linkedin.com/in/shubhankar-agrawal/'
 }
 
-const server = 'https://llm-amazing-race-ai.vercel.app/'
+const server = 'https://llm-amazing-race-ai.vercel.app'
 
 export {colors, socials, server}

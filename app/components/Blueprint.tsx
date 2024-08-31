@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 
 import '../assets/blueprint.sass'
 import { socials } from "../variables";
-import { getAllCities } from "./routes";
+import { getAllCities, getCitiesWithinRadius } from "./routes";
 import type { City, Play } from '../types'
 
 interface Props {
@@ -31,6 +31,7 @@ const Blueprint = (props: Props) => {
     const [pickCountry, setPickCountry] = useState<string>('');
 
     const [gameCity, setGameCity] = useState<City>();
+    const [closeCities, setCloseCities] = useState<City[]>();
 
     const handleCountryChange = (e) => {
         setPickCountry(e.target.value);
@@ -57,6 +58,16 @@ const Blueprint = (props: Props) => {
     useEffect(() => {
         props.updateName(player)
     }, [player]);
+
+    useEffect(() => {
+        if (props.city.name == '' && props.city.lat != 0 && props.city.lng != 0) {
+            const fetchCities = async () => {
+                const nearbyCities = await getCitiesWithinRadius(props.city.lat, props.city.lng, 10);
+                setCloseCities(nearbyCities);
+            };
+            fetchCities();
+        }
+    }, [props.city])
 
     const getLink = (key: string) => {
         window.open(socials[key], "_blank", "noreferrer,noopener");
