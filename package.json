@@ -13,19 +13,24 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
+    "@tweenjs/tween.js": "^25.0.0",
     "@types/node": "20.1.4",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "accessor-fn": "^1.5.1",
     "axios": "^1.7.5",
     "concurrently": "^8.0.1",
     "eslint": "8.0.0",
     "eslint-config-next": "^14.2.7",
-    "globe.gl": "^2.32.5",
+    "kapsule": "^1.14.5",
     "next": "^14.2.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-use": "^17.5.1",
     "sass": "^1.77.8",
+    "three": "^0.168.0",
+    "three-globe": "^2.31.1",
+    "three-render-objects": "^1.29.4",
     "typescript": "5.0.4"
   }
 }
