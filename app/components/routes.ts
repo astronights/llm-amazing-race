@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { server } from '../variables';
+
+const server = process.env.FLASK_SERVER
 
 export const getAllCities = async () => {
     const response = await axios.get(`${server}/api/city/all`);
