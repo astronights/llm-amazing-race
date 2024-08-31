@@ -4,6 +4,7 @@ import { Mesh, CircleGeometry, MeshBasicMaterial, DoubleSide, Vector3 } from 'th
 
 interface Props {
     width: number;
+    height: number;
     color: string;
     mode: string;
     lat: number;
@@ -32,8 +33,8 @@ const Map = (props: Props) => {
         if (globeInstanceRef.current) {
             globeInstanceRef.current
                 .globeImageUrl(`//unpkg.com/three-globe/example/img/earth-${props.mode === 'dark' ? 'night' : 'day'}.jpg`)
-                .width(props.width * 0.7)
-                .height(props.width * 0.40)
+                .width(Math.min(props.width, props.height) * 0.8)
+                .height(Math.min(props.width, props.height) * 0.8)
                 .backgroundColor(props.color);
 
             if (props.lat !== 0 && props.lng !== 0) {

@@ -10,20 +10,21 @@ import {
 } from "@chakra-ui/react"
 import { useMeasure } from "react-use";
 
-import { City } from "../types";
+import { City, Play } from "../types";
 import Map from './Map';
 
 
 interface Props {
     color: string;
-    name: string;
+    status: boolean;
+    progress: Play;
     city: City;
     updateCoor: Function;
 }
 
 const Chat = (props: Props) => {
 
-    const [ref, { width }] = useMeasure();
+    const [ref, { width, height }] = useMeasure();
     const { colorMode } = useColorMode();
     const bgColor = useToken('colors', useColorModeValue("gray.200", "gray.800"))
 
@@ -41,7 +42,7 @@ const Chat = (props: Props) => {
                         <Container h={'10vh'} p={1} mb={2} ml={0}>
                             <HStack paddingBottom={1} justifyContent="flex-start">
                                 <Heading as='h3' size='md' letterSpacing={1} color={props.color}>
-                                    {`Hello ${props.name}`}
+                                    {`Hello ${props.progress.name}`}
                                 </Heading>
                             </HStack>
                             <HStack>
@@ -54,7 +55,7 @@ const Chat = (props: Props) => {
                         </Container>
                         <Divider />
                         <Container h={'72vh'} p={2} justifyContent={'center'}>
-                            <Map width={width} color={bgColor} mode={colorMode}
+                            <Map width={width} height={height} color={bgColor} mode={colorMode}
                                 lat={props.city.lat} lng={props.city.lng} updateCoor={props.updateCoor}
                             />
                         </Container>

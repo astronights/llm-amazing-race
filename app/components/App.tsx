@@ -25,12 +25,12 @@ const App = () => {
     // blue, cyan, gray, green, orange, pink, purple, red, teal, yellow
     const color = "teal";
 
-    const [status, setStatus] = useState(true);
+    const [status, setStatus] = useState(false);
     const [city, setCity] = useState(location);
     const [progress, setProgress] = useState(play);
 
     const updateName = (name: string) => {
-        setProgress({ ...progress, name: name })
+        setProgress({ ...progress, name: name, start: Date.now() })
     }
 
     const updateCity = (lat: number, lng: number) => {
@@ -39,7 +39,10 @@ const App = () => {
 
     return (
         <>
-            <Flex>
+            <Flex direction={{ base: "column", md: "row" }}
+                height="100vh" // Ensure full height
+                overflow={{ base: 'auto', md: 'hidden' }} // Enable scrolling on smaller screens, disable on larger screens
+            >
                 {!status ? (
                     <Blueprint
                         color={color}
@@ -58,7 +61,12 @@ const App = () => {
                         updateName={updateName} />
                 )}
 
-                <Chat color={color} name={progress.name} city={city} updateCoor={updateCity} />
+                <Chat
+                    status={status}
+                    color={color}
+                    progress={progress}
+                    city={city}
+                    updateCoor={updateCity} />
             </Flex>
         </>
     );
