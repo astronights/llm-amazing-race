@@ -40,8 +40,8 @@ const App = () => {
     return (
         <>
             <Flex direction={{ base: "column", md: "row" }}
-                height="100vh" // Ensure full height
-                overflow={{ base: 'auto', md: 'hidden' }} // Enable scrolling on smaller screens, disable on larger screens
+                height="100vh" 
+                overflow={{ base: 'auto', md: 'hidden' }}
             >
                 {!status ? (
                     <Blueprint

@@ -33,8 +33,8 @@ const Map = (props: Props) => {
         if (globeInstanceRef.current) {
             globeInstanceRef.current
                 .globeImageUrl(`//unpkg.com/three-globe/example/img/earth-${props.mode === 'dark' ? 'night' : 'day'}.jpg`)
-                .width(Math.min(props.width, props.height) * 0.8)
-                .height(Math.min(props.width, props.height) * 0.8)
+                .width(Math.min(props.width, props.height) * 0.7)
+                .height(Math.min(props.width, props.height) * 0.7)
                 .backgroundColor(props.color);
 
             if (props.lat !== 0 && props.lng !== 0) {

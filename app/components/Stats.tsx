@@ -1,9 +1,7 @@
 import {
     Flex, Container, HStack, VStack, Box,
     Button, Text, Heading, Divider,
-    useColorModeValue, useColorMode,
-    Tr, Th, Table, Thead, Tbody, Td,
-    Progress
+    useColorModeValue, useColorMode
 } from "@chakra-ui/react";
 import { ArrowRightIcon, AtSignIcon, LinkIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
@@ -30,7 +28,7 @@ const Stats = (props: Props) => {
     useEffect(() => {
         const fetchDescription = async () => {
             const desc = await getDescription(props.city.name, props.city.country)
-            setDescription(desc)
+            setDescription(desc.description)
         };
         fetchDescription();
     }, []);
@@ -67,25 +65,6 @@ const Stats = (props: Props) => {
                                 <Text fontSize={'sm'}>Here's a little bit about the city: </Text>
                                 <Text fontSize={'sm'}>{description}</Text>
                             </VStack>
-
-                            <Table variant="simple" mt={4} size={'sm'}>
-                                <Thead>
-                                    <Tr>
-                                        <Th></Th>
-                                        <Th>Level</Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {props.progress.progress.map((stop, index) => (
-                                        <Tr key={index}>
-                                            <Td>{stop.level}</Td>
-                                            <Td>{stop.task.name}</Td>
-                                            <Td>{stop.task.attempts}</Td>
-                                            <Td>{stop.task.time}</Td>
-                                        </Tr>
-                                    ))}
-                                </Tbody>
-                            </Table>
                             <VStack pt={2}>
                                 <Flex justifyContent="space-between" alignItems="center">
                                     <Text mr={2}>A New Adventure ?</Text>
