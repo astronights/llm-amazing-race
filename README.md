@@ -33,7 +33,7 @@ The game is built with a modern tech stack combining TypeScript, Next.js and Rea
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js** (for running the Next.js frontend)
+- **Node.js 24.x** (for running the Next.js frontend). The version is pinned via `.nvmrc` and `engines` in `package.json`, so with a version manager you can just run `nvm use` (or `fnm use`) in the project root.
 - **Vercel CLI** (for deployment)
 - **Git** (for version control)
 

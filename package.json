@@ -2,6 +2,9 @@
   "name": "amazing-race-llm",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "next-dev": "next dev",
     "dev": "npm run next-dev",
@@ -13,7 +16,7 @@
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@tweenjs/tween.js": "^25.0.0",
-    "@types/node": "20.1.4",
+    "@types/node": "24.13.3",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "accessor-fn": "^1.5.1",
@@ -29,6 +32,6 @@
     "three": "^0.168.0",
     "three-globe": "^2.31.1",
     "three-render-objects": "^1.29.4",
-    "typescript": "5.0.4"
+    "typescript": "5.9.3"
   }
 }
